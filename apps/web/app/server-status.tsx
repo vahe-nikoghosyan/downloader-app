@@ -10,16 +10,18 @@ export function ServerStatus() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    // 503 still has a useful body (e.g. database down), so read JSON for any response.
     fetch("/api/health")
-      .then((response) => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.json() as Promise<HealthResponse>;
-      })
+      .then((response) => response.json() as Promise<HealthResponse>)
       .then(setHealth)
       .catch(() => setError(true));
   }, []);
 
   if (error) return <p>API: unreachable</p>;
   if (!health) return <p className="muted">API: checking…</p>;
-  return <p>API: {health.status} (up {health.uptimeSeconds}s)</p>;
+  return (
+    <p>
+      API: {health.status} (up {health.uptimeSeconds}s) · Database: {health.services.database}
+    </p>
+  );
 }

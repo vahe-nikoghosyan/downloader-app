@@ -6,10 +6,18 @@
     "node": ">=22"
   },
   "scripts": {
-    "dev": "pnpm --filter @downloader/shared build && pnpm --parallel --recursive dev",
+    "dev": "pnpm --filter \"./packages/*\" build && pnpm --parallel --recursive dev",
     "build": "pnpm --recursive build",
     "start": "pnpm --parallel --recursive start",
-    "typecheck": "pnpm --recursive typecheck"
+    "typecheck": "pnpm --recursive typecheck",
+    "db:up": "docker compose up -d --wait",
+    "db:down": "docker compose down",
+    "db:generate": "pnpm --filter @downloader/db db:generate",
+    "db:migrate": "pnpm --filter @downloader/db build && pnpm --filter @downloader/db db:migrate",
+    "db:studio": "pnpm --filter @downloader/db db:studio",
+    "docker:up": "docker compose -f compose.prod.yaml up -d --build --wait",
+    "docker:down": "docker compose -f compose.prod.yaml down",
+    "docker:logs": "docker compose -f compose.prod.yaml logs -f"
   },
   "devDependencies": {
     "@types/node": "^22.19.0",

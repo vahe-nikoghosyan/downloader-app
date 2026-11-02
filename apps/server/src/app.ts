@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import { config } from "./config.js";
+import { dbPlugin } from "./plugins/db.js";
 import { healthRoutes } from "./routes/health.js";
 
 // Builds the Fastify app without starting it.
@@ -13,7 +14,10 @@ export function buildApp() {
     },
   });
 
-  // Every API route is served under /api
+  // Plugins: shared resources (database, later Redis, etc.)
+  app.register(dbPlugin);
+
+  // Routes: every API route is served under /api
   app.register(healthRoutes, { prefix: "/api" });
 
   return app;
