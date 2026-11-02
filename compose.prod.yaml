@@ -40,6 +40,8 @@ services:
     environment:
       DATABASE_URL: *database-url
       LOG_LEVEL: ${LOG_LEVEL:-info}
+      DOWNLOAD_TOKEN_SECRET: ${DOWNLOAD_TOKEN_SECRET:?set DOWNLOAD_TOKEN_SECRET in .env}
+      MAX_DOWNLOAD_MB: ${MAX_DOWNLOAD_MB:-200}
     depends_on:
       migrate:
         condition: service_completed_successfully

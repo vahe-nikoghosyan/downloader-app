@@ -22,8 +22,11 @@ RUN pnpm --filter "@downloader/web..." build
 
 # ---- Runtime: Next.js standalone output (no full node_modules needed) ----
 FROM node:22-alpine AS runtime
+ARG API_URL=http://server:4000
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+# Server Components call the API directly at request time.
+ENV API_URL=$API_URL
 ENV HOSTNAME=0.0.0.0
 ENV PORT=3000
 WORKDIR /app

@@ -8,6 +8,13 @@ const envSchema = z.object({
   PORT: z.coerce.number().int().positive().default(4000),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).default("info"),
   DATABASE_URL: z.url(),
+
+  // Secret used to sign download links. Generate one with: openssl rand -hex 32
+  DOWNLOAD_TOKEN_SECRET: z.string().min(32, "must be at least 32 characters"),
+  // Largest file the server will download, in megabytes.
+  MAX_DOWNLOAD_MB: z.coerce.number().positive().default(200),
+  // Optional outbound proxy for all requests to external sites.
+  HTTPS_PROXY: z.url().optional(),
 });
 
 const parsed = envSchema.safeParse(process.env);
@@ -26,4 +33,7 @@ export const config = {
   logLevel: env.LOG_LEVEL,
   databaseUrl: env.DATABASE_URL,
   isProduction: env.NODE_ENV === "production",
+  downloadTokenSecret: env.DOWNLOAD_TOKEN_SECRET,
+  maxDownloadBytes: Math.round(env.MAX_DOWNLOAD_MB * 1024 * 1024),
+  outboundProxyUrl: env.HTTPS_PROXY,
 };

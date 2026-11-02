@@ -2,6 +2,11 @@
   --bg: #ffffff;
   --fg: #111111;
   --muted: #666666;
+  --border: #dddddd;
+  --surface: #f6f6f7;
+  --accent: #2557d6;
+  --accent-fg: #ffffff;
+  --error: #c62828;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -9,6 +14,11 @@
     --bg: #0f0f10;
     --fg: #f2f2f2;
     --muted: #9a9a9a;
+    --border: #2c2c30;
+    --surface: #18181b;
+    --accent: #5b8cff;
+    --accent-fg: #0f0f10;
+    --error: #ff6b6b;
   }
 }
 
@@ -29,6 +39,123 @@ main {
   padding: 48px 16px;
 }
 
+h2 {
+  font-size: 1rem;
+  margin: 40px 0 12px;
+}
+
 .muted {
   color: var(--muted);
+}
+
+.error {
+  color: var(--error);
+}
+
+/* Form */
+.url-form {
+  display: flex;
+  gap: 8px;
+  margin: 24px 0 16px;
+}
+
+.url-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  font: inherit;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+button,
+.button {
+  padding: 10px 16px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--accent-fg);
+  background: var(--accent);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* Results */
+.items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.item img,
+.item .placeholder {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--border);
+}
+
+.item .placeholder {
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.filename {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Supported sources */
+.sources ul {
+  padding-left: 18px;
+}
+
+.sources li {
+  margin-bottom: 8px;
+}
+
+.sources code {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+footer {
+  margin-top: 48px;
+  font-size: 0.875rem;
 }
